@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('team_of_the_weeks', function (Blueprint $table) {
             $table->id();
             $table->integer('stage_id')->unsigned();
+            $table->boolean('is_good_team')->default(true);
             $table->timestamps();
         });
     }

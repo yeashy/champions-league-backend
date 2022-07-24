@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('surname');
-            $table->string('photo');
+            $table->string('photo')->unique();
             $table->integer('games')->unsigned();
             $table->float('avg_rate')->unsigned()->default(6.0);
             $table->integer('goals')->unsigned()->default(0);

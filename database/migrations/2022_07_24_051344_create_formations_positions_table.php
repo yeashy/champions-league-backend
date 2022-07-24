@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('stages', function (Blueprint $table) {
+        Schema::create('formations_positions', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->enum('num_of_clubs', [32, 16, 8, 4, 2, 1])->unique();
-            $table->boolean('is_active')->default(false);
+            $table->integer('formation_id')->unsigned();
+            $table->integer('position_id')->unsigned();
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stages');
+        Schema::dropIfExists('formations_positions');
     }
 };

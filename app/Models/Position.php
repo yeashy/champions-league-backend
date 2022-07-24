@@ -13,4 +13,9 @@ class Position extends Model
     {
         return $this->hasMany(Player::class);
     }
+
+    public function formations()
+    {
+        return $this->belongsToMany(Formation::class, 'formations_positions', 'position_id', 'formation_id');
+    }
 }
