@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\PlayerCrudController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +21,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::controller(PlayerController::class)->group(function () {
-    Route::get('/player/{id}', 'read');
-    Route::post('player/create', 'create');
     Route::get('/player/{id}/stats', 'showPlayerStats');
+});
+
+Route::controller(PlayerCrudController::class)->group(function () {
+    Route::get('/player/{id}', 'read');
+    Route::post('/player/create', 'create');
+    Route::patch('/player/{id}', 'update');
+    Route::delete('/player/{id}', 'delete');
 });

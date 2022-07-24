@@ -22,10 +22,12 @@ return new class extends Migration
             $table->float('avg_rate')->unsigned()->default(6.0);
             $table->integer('goals')->unsigned()->default(0);
             $table->integer('assists')->unsigned()->default(0);
+            $table->integer('own_goals')->unsigned()->default(0);
             $table->integer('yellow_cards')->unsigned()->default(0);
             $table->integer('red_cards')->unsigned()->default(0);
             $table->boolean('is_default_in_squad')->default(false);
-            $table->float('current_rate')->unsigned()->default(6.0);
+            $table->float('current_rate')->unsigned()->nullable();
+            $table->boolean('is_disqualified')->default(false);
             $table->integer('club_id')->unsigned();
             $table->integer('position_id')->unsigned();
             $table->timestamps();
