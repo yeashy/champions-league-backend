@@ -27,7 +27,7 @@ return new class extends Migration
             $table->integer('points')->unsigned()->default(0);
             $table->integer('group_place')->unsigned()->default(0);
             $table->integer('group_id');
-            $table->integer('stage_id');
+            $table->integer('stage_id')->nullable();
             $table->timestamps();
         });
     }
