@@ -33,4 +33,9 @@ class Game extends Model
     {
         return $this->hasOne(Club::class, 'loser_club_id');
     }
+
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
 }

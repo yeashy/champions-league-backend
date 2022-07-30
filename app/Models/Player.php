@@ -23,4 +23,9 @@ class Player extends Model
     {
         return $this->belongsToMany(TeamOfTheWeek::class, 'player_team_of_the_week', 'player_id', 'team_of_the_week_id');
     }
+
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
 }
