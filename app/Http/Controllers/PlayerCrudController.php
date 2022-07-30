@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\CreatePlayerRequest;
 use App\Models\DTO\ClubPlayerDTO;
 use App\Models\DTO\PlayerStatsDTO;
 use App\Models\Player;
@@ -121,4 +120,6 @@ class PlayerCrudController extends Controller
             "message" => "OK"
         ]);
     }
+
+    //    TODO: make list with goals, assists, etc (by club, by position)
 }

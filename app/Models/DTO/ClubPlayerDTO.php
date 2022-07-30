@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 class ClubPlayerDTO implements interfaceDTO
 {
-    public string $name;
-    public string $logo;
+    private string $name;
+    private string $logo;
 
     public static function fromModel(Model $club)
     {
@@ -20,6 +20,6 @@ class ClubPlayerDTO implements interfaceDTO
 
     public static function fromRequest(Request $request)
     {
-        
+
     }
 }

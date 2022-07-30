@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\DTO\ClubPlayerDTO;
 use App\Models\DTO\PlayerStatsDTO;
+use App\Models\DTO\VideoDTO;
 use App\Models\Player;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use function React\Promise\map;
 
 class PlayerController extends Controller
 {
@@ -24,11 +26,18 @@ class PlayerController extends Controller
         $club = $player->club;
         $clubInfo = ClubPlayerDTO::fromModel($club);
         $position = $player->position->name;
+        $history = $player->history();
+
+        $videos = $player->videos->map(function ($video) {
+            return VideoDTO::fromModel($video);
+        });
 
         return response()->json([
             'player_stats' => $playerStats,
             'club_info' => $clubInfo,
-            'position' => $position
+            'position' => $position,
+            'videos' => $videos,
+            'history' => $history
         ]);
     }
 
@@ -36,7 +45,7 @@ class PlayerController extends Controller
     {
         $validator = Validator::make($request->all(), [
             "player1" => 'int|required|exists:players,id',
-            "player1" => 'int|required|exists:players,id'
+            "player2" => 'int|required|exists:players,id'
         ]);
 
         if ($validator->fails()) {

@@ -90,4 +90,6 @@ class ClubCrudController extends Controller
             "message" => "OK"
         ]);
     }
+
+//    TODO: make list with scored, conceded, etc (by group, by pot, by is_playing)
 }

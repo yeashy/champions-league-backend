@@ -19,9 +19,11 @@ return new class extends Migration
             $table->integer('away_club_id')->unsigned();
             $table->integer('winner_club_id')->unsigned()->nullable();
             $table->integer('loser_club_id')->unsigned()->nullable();
-            $table->integer('home_scored')->default(0)->unsigned();
-            $table->integer('away_scored')->default(0)->unsigned();
+            $table->integer('home_scored')->unsigned()->nullable();
+            $table->integer('away_scored')->unsigned()->nullable();
             $table->boolean('has_played')->default(false);
+            $table->integer('stage_id')->unsigned();
+            $table->integer('group_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }

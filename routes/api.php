@@ -4,6 +4,7 @@ use App\Http\Controllers\ClubController;
 use App\Http\Controllers\ClubCrudController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerCrudController;
+use App\Http\Controllers\GameCrudController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,4 +41,8 @@ Route::controller(ClubCrudController::class)->group(function () {
     Route::post('/clubs/create', 'create');
     Route::patch('/clubs/{id}', 'update');
     Route::delete('/clubs/{id}', 'delete');
+});
+
+Route::controller(GameCrudController::class)->group(function () {
+    Route::get('/games/{id}', 'read');
 });

@@ -5,6 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string $name
+ * @property string $logo
+ * @property int $group_id
+ * @property int $pot_id
+ */
 class Club extends Model
 {
     use HasFactory;

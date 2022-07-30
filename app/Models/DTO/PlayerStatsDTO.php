@@ -7,15 +7,15 @@ use Illuminate\Http\Request;
 
 class PlayerStatsDTO implements interfaceDTO
 {
-    public string $name;
-    public string $surname;
-    public string $photo;
-    public int $games;
-    public float $avg_rate;
-    public int $goals;
-    public int $assists;
-    public int $yellow_cards;
-    public int $red_cards;
+    private string $name;
+    private string $surname;
+    private string $photo;
+    private int $games;
+    private float $avg_rate;
+    private int $goals;
+    private int $assists;
+    private int $yellow_cards;
+    private int $red_cards;
 
     public static function fromModel(Model $player)
     {
@@ -27,8 +27,10 @@ class PlayerStatsDTO implements interfaceDTO
             "avg_rate" => $player->avg_rate,
             "goals" => $player->goals,
             "assists" => $player->assists,
+            "own_goals" => $player->own_goals,
             "yellow_cards" => $player->yellow_cards,
             "red_cards" => $player->red_cards,
+            "clean_sheets" => $player->clean_sheets
         ];
     }
 

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('stages', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->enum('num_of_clubs', [32, 16, 8, 4, 2, 1])->unique();
+            $table->integer('num_of_clubs')->unique();
             $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
