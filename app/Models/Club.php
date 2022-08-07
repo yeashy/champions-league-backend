@@ -10,10 +10,21 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $logo
  * @property int $group_id
  * @property int $pot_id
+ * @property int $games
+ * @property int $goals_scored
+ * @property int $goals_conceded
+ * @property int $wins
+ * @property int $points
+ * @property int $losses
+ * @property int $draws
  */
 class Club extends Model
 {
     use HasFactory;
+
+    /**
+     * @var int|mixed
+     */
 
     public function players()
     {

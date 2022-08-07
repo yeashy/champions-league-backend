@@ -6,7 +6,7 @@ use App\Models\Club;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-class ClubDTO implements interfaceDTO
+class ClubDTO implements InterfaceDTO
 {
 
     public static function fromModel(Model $model)

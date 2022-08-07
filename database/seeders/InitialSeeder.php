@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\Ampluas;
 use App\Enums\NumOfClubs;
 use App\Models\Club;
 use App\Models\Formation;
@@ -56,12 +57,12 @@ class InitialSeeder extends Seeder
     private function createPosition()
     {
         $position = new Position();
-        $position->amplua = config('constants.ampluas.attacker');
+        $position->amplua = Ampluas::Attacker;
         $position->name = "LW";
         $position->save();
 
         $position = new Position();
-        $position->amplua = config('constants.ampluas.attacker');
+        $position->amplua = Ampluas::Attacker;
         $position->name = "ST";
         $position->save();
     }

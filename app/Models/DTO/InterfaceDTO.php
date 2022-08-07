@@ -5,7 +5,7 @@ namespace App\Models\DTO;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-interface interfaceDTO
+interface InterfaceDTO
 {
     public static function fromModel(Model $model);
 

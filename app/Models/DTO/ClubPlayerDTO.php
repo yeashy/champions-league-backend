@@ -5,7 +5,7 @@ namespace App\Models\DTO;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-class ClubPlayerDTO implements interfaceDTO
+class ClubPlayerDTO implements InterfaceDTO
 {
     private string $name;
     private string $logo;

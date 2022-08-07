@@ -6,7 +6,7 @@ use App\Models\Player;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-class PlayerDTO implements interfaceDTO
+class PlayerDTO implements InterfaceDTO
 {
 
     public static function fromModel(Model $model)
