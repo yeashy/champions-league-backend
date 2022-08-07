@@ -26,9 +26,13 @@ class GameCrudController extends Controller
         $homeClub = ClubPlayerDTO::fromModel($game->homeClub);
         $awayClub = ClubPlayerDTO::fromModel($game->awayClub);
         $players = $game->players();
+        $stage = $game->stage->name;
+        $group = $game->group->letter ?? null;
 
         return response()->json([
             "game" => $gameResult,
+            "stage" => $stage,
+            "group" => $group,
             "home_club" => $homeClub,
             "away_club" => $awayClub,
             "players" => $players
@@ -70,7 +74,8 @@ class GameCrudController extends Controller
 
         $validator = Validator::make($request->all(), [
             "home_players" => 'array|required',
-            "away_players" => 'array|required'
+            "away_players" => 'array|required',
+            "videos" => 'array'
         ]);
 
         if ($validator->fails()) {
@@ -79,7 +84,7 @@ class GameCrudController extends Controller
             ], 400);
         }
 
-        $game = $gameService->countAllResults($request->input('home_players'), $request->input('away_players'), $game);
+        $game = $gameService->countAllResults($request->input('home_players'), $request->input('away_players'), $request->input('videos'), $game);
         $game->save();
         //TODO: maybe recalculate group and stage results
         return response()->json([

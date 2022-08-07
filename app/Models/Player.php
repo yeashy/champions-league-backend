@@ -43,11 +43,6 @@ class Player extends Model
         return $this->belongsToMany(TeamOfTheWeek::class, 'player_team_of_the_week', 'player_id', 'team_of_the_week_id');
     }
 
-    public function videos()
-    {
-        return $this->hasMany(Video::class);
-    }
-
     public function history()
     {
         $matches = DB::table('games_players')->where('player_id', '=', $this->id)->get();

@@ -8,6 +8,8 @@ use App\Models\DTO\ClubPlayerDTO;
 use App\Models\DTO\PlayerStatsDTO;
 use App\Models\DTO\VideoDTO;
 use App\Models\Player;
+use App\Models\Position;
+use App\Services\PlayersForTeamOfTheWeekService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
@@ -29,14 +31,9 @@ class PlayerController extends Controller
         $clubInfo = ClubPlayerDTO::fromModel($club);
         $history = $player->history();
 
-        $videos = $player->videos->map(function ($video) {
-            return VideoDTO::fromModel($video);
-        });
-
         return response()->json([
             'player_stats' => $playerStats,
             'club_info' => $clubInfo,
-            'videos' => $videos,
             'history' => $history
         ]);
     }
@@ -111,5 +108,26 @@ class PlayerController extends Controller
         }
 
         return response()->json($result);
+    }
+
+    public function getForTeamOfTheWeek(Request $request, PlayersForTeamOfTheWeekService $playersForTeamOfTheWeekService): JsonResponse
+    {
+        $validatior = Validator::make($request->all(), [
+            "position_id" => 'required|int|exists:positions,id'
+        ]);
+
+        if ($validatior->fails()) {
+            return response()->json([
+                "message" => $validator->errors()->all()
+            ], 400);
+        }
+
+        $positionId = $request->input('position_id');
+
+        $position = Position::find($positionId);
+
+        $players = $playersForTeamOfTheWeekService->getPlayersByPositions($position->name);
+
+        return response()->json($players);
     }
 }

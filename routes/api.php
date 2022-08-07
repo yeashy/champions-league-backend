@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::controller(PlayerController::class)->group(function () {
     Route::get('/players/{id}/stats', 'showPlayerStats');
     Route::get('/players/rating', 'sortBy');
+    Route::get('/players/position', 'getForTeamOfTheWeek');
     Route::patch('/players/swap', 'swap');
 });
 

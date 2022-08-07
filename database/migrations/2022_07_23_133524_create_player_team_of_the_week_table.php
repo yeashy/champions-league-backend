@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('player_team_of_the_week', function (Blueprint $table) {
             $table->id();
             $table->integer('player_id')->unsigned();
+            $table->integer('position_id')->unsigned();
             $table->integer('team_of_the_week_id')->unsigned();
             $table->timestamps();
         });

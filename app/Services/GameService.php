@@ -4,17 +4,22 @@ namespace App\Services;
 
 use App\Models\Game;
 use App\Models\Player;
+use App\Models\Video;
 use Illuminate\Support\Facades\DB;
 
 class GameService
 {
-    public function countAllResults(array $homePlayers, array $awayPlayers, Game $game): Game
+    public function countAllResults(array $homePlayers, array $awayPlayers, array|null $videos, Game $game): Game
     {
         $game = $this->countGoals($homePlayers, $awayPlayers, $game);
         $game = $this->makeResults($game);
         $this->makeClubResults($game);
         $this->makePlayerResults($homePlayers, $awayPlayers);
         $this->addPlayerResultsToTable($homePlayers, $awayPlayers, $game->id);
+
+        if ($videos !== null) {
+            $this->addVideos($videos, $game->id);
+        }
 
         return $game;
     }
@@ -108,14 +113,12 @@ class GameService
     {
         $gamesPlayers = [];
 
-        foreach ($homePlayers as $player)
-        {
+        foreach ($homePlayers as $player) {
             $gamePlayer = $this->createGamePlayerEntity($gameId, $player);
             $gamesPlayers[] = $gamePlayer;
         }
 
-        foreach ($awayPlayers as $player)
-        {
+        foreach ($awayPlayers as $player) {
             $gamePlayer = $this->createGamePlayerEntity($gameId, $player);
             $gamesPlayers[] = $gamePlayer;
         }
@@ -135,5 +138,22 @@ class GameService
             "yellow_cards" => $player['yellow_cards'],
             "rate" => $player['rate']
         ];
+    }
+
+    private function addVideos(array $videos, int $gameId): void
+    {
+        foreach ($videos as $videoFromRequest) {
+            $video = new Video();
+
+            $video->game_id = $gameId;
+            $video->path = $videoFromRequest->path;
+
+            $video->save();
+        }
+    }
+
+    private function dropAllCurrentRates()
+    {
+        Player::query()->update(["current_rate" => null]);
     }
 }

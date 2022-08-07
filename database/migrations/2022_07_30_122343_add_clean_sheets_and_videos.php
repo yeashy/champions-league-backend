@@ -19,7 +19,6 @@ return new class extends Migration {
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
             $table->integer('game_id')->unsigned();
-            $table->integer('player_id')->unsigned();
             $table->string('path');
             $table->timestamps();
         });

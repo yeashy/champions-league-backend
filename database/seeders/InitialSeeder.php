@@ -26,7 +26,6 @@ class InitialSeeder extends Seeder
     {
         $this->createPlayer();
         $this->createClub();
-        $this->createPosition();
         $this->createGroup();
         $this->createPot();
         $this->createGame();
@@ -52,19 +51,6 @@ class InitialSeeder extends Seeder
         $player->club_id = 2;
         $player->position_id = 2;
         $player->save();
-    }
-
-    private function createPosition()
-    {
-        $position = new Position();
-        $position->amplua = Ampluas::Attacker;
-        $position->name = "LW";
-        $position->save();
-
-        $position = new Position();
-        $position->amplua = Ampluas::Attacker;
-        $position->name = "ST";
-        $position->save();
     }
 
     private function createClub()
@@ -131,7 +117,6 @@ class InitialSeeder extends Seeder
     {
         $video = new Video();
         $video->game_id = 1;
-        $video->player_id = 1;
         $video->path = "path/to/video/123.mp4";
         $video->save();
     }
