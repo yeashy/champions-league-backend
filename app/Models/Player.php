@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\DB;
  * @property int $club_id
  * @property int $position_id
  * @property int $id
+ * @property int $goals
+ * @property int $assists
+ * @property int $own_goals
+ * @property int $games
+ * @property float $avg_rate
+ * @property float $current_rate
+ * @property Club $club
+ * @property int $yellow_cards
+ * @property int $red_cards
  */
 class Player extends Model
 {

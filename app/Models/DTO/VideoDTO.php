@@ -14,6 +14,7 @@ class VideoDTO implements InterfaceDTO
     public static function fromModel(Model $video)
     {
         return [
+            "id" => $video->id,
             "player_id" => $video->player_id,
             "game_id" => $video->game_id,
             "path" => $video->path

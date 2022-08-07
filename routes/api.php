@@ -21,10 +21,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(PlayerController::class)->group(function () {
     Route::get('/players/{id}/stats', 'showPlayerStats');
+    Route::get('/players/rating', 'sortBy');
     Route::patch('/players/swap', 'swap');
 });
 
 Route::controller(ClubController::class)->group(function () {
+    Route::get('/clubs/{id}/players', 'getPlayers');
     Route::patch('/clubs/swap/groups', 'swapGroups');
     Route::patch('/clubs/swap/pots', 'swapPots');
 });
@@ -45,4 +47,6 @@ Route::controller(ClubCrudController::class)->group(function () {
 
 Route::controller(GameCrudController::class)->group(function () {
     Route::get('/games/{id}', 'read');
+    Route::post('/games/create', 'create');
+    Route::patch('/games/{id}', 'update');
 });

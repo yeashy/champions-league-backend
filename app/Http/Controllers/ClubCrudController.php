@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Club;
+use App\Models\DTO\ClubDTO;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\JsonResponse;
 
 class ClubCrudController extends Controller
 {
-    public function read($id)
+    public function read(int $id): JsonResponse
     {
         $club = Club::find($id);
 
@@ -18,12 +20,10 @@ class ClubCrudController extends Controller
             ])->setStatusCode(404);
         }
 
-        return response()->json([
-            "club" => $club
-        ]);
+        return response()->json($club);
     }
 
-    public function create(Request $request)
+    public function create(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'name' => 'string|required',
@@ -38,12 +38,7 @@ class ClubCrudController extends Controller
             ], 400);
         }
 
-        $club = new Club();
-
-        $club->name = $request->input('name');
-        $club->logo = $request->input('logo');
-        $club->group_id = $request->input('group_id');
-        $club->pot_id = $request->input('pot_id');
+        $club = ClubDTO::fromRequest($request);
         $club->save();
 
         return response()->json([
@@ -51,7 +46,7 @@ class ClubCrudController extends Controller
         ]);
     }
 
-    public function update($id, Request $request)
+    public function update(int $id, Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'name' => 'string',
@@ -66,6 +61,12 @@ class ClubCrudController extends Controller
 
         $club = Club::find($id);
 
+        if ($club === null) {
+            return response()->json([
+                "message" => "Id is unavailable"
+            ])->setStatusCode(404);
+        }
+
         $club->name = $request->input('name') ?? $club->name;
         $club->logo = $request->input('name') ?? $club->logo;
 
@@ -74,7 +75,7 @@ class ClubCrudController extends Controller
         ]);
     }
 
-    public function delete($id)
+    public function delete(int $id): JsonResponse
     {
         $club = Club::find($id);
 

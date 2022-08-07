@@ -20,6 +20,7 @@ class PlayerStatsDTO implements interfaceDTO
     public static function fromModel(Model $player)
     {
         return [
+            "id" => $player->id,
             "name" => $player->name,
             "surname" => $player->surname,
             "photo" => $player->photo,
@@ -30,7 +31,8 @@ class PlayerStatsDTO implements interfaceDTO
             "own_goals" => $player->own_goals,
             "yellow_cards" => $player->yellow_cards,
             "red_cards" => $player->red_cards,
-            "clean_sheets" => $player->clean_sheets
+            "clean_sheets" => $player->clean_sheets,
+            "position" => $player->position->name
         ];
     }
 

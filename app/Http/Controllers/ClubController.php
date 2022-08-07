@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Club;
+use App\Models\DTO\PlayerStatsDTO;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\JsonResponse;
 
 class ClubController extends Controller
 {
-    public function swapGroups(Request $request)
+    public function swapGroups(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             "club1" => 'int|required|exists:clubs,id',
@@ -42,7 +44,7 @@ class ClubController extends Controller
         ]);
     }
 
-    public function swapPots(Request $request)
+    public function swapPots(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             "club1" => 'int|required|exists:clubs,id',
@@ -74,5 +76,24 @@ class ClubController extends Controller
         return response()->json([
             "message" => "OK"
         ]);
+    }
+
+    public function getPlayers(int $id): JsonResponse
+    {
+        $club = Club::find($id);
+
+        if ($club === null) {
+            return response()->json([
+                "message" => "Id is unavailable"
+            ])->setStatusCode(404);
+        }
+
+        $players = $club->players;
+
+        $result = $players->map(function ($player) {
+            return PlayerStatsDTO::fromModel($player);
+        });
+
+        return response()->json($result);
     }
 }

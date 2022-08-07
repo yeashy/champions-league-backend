@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Ampluas;
+use App\Enums\SortTypes;
 use App\Models\DTO\ClubPlayerDTO;
 use App\Models\DTO\PlayerStatsDTO;
 use App\Models\DTO\VideoDTO;
 use App\Models\Player;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use function React\Promise\map;
+use Illuminate\Http\JsonResponse;
 
 class PlayerController extends Controller
 {
-    public function showPlayerStats(int $id)
+    public function showPlayerStats(int $id): JsonResponse
     {
         $player = Player::find($id);
 
@@ -25,7 +27,6 @@ class PlayerController extends Controller
         $playerStats = PlayerStatsDTO::fromModel($player);
         $club = $player->club;
         $clubInfo = ClubPlayerDTO::fromModel($club);
-        $position = $player->position->name;
         $history = $player->history();
 
         $videos = $player->videos->map(function ($video) {
@@ -35,13 +36,12 @@ class PlayerController extends Controller
         return response()->json([
             'player_stats' => $playerStats,
             'club_info' => $clubInfo,
-            'position' => $position,
             'videos' => $videos,
             'history' => $history
         ]);
     }
 
-    public function swap(Request $request)
+    public function swap(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             "player1" => 'int|required|exists:players,id',
@@ -74,5 +74,42 @@ class PlayerController extends Controller
         return response()->json([
             "message" => "OK"
         ]);
+    }
+
+    public function sortBy(Request $request): JsonResponse
+    {
+        $sortType = $request->query('sort_type');
+
+        if (!in_array($sortType, SortTypes::Players)) {
+            return response()->json([
+                "message" => "sort_type is invalid $sortType"
+            ]);
+        }
+
+        $players = Player::select('club_id', 'position_id', 'name', 'surname', 'photo', $sortType)->orderBy($sortType, "DESC")->limit(20)->get();
+
+        $result = [];
+
+        if ($sortType === SortTypes::Players['clean_sheets']) {
+            $players = $players->map(function ($player) {
+                if ($player->position->amplua === Ampluas::Goalkeeper) {
+                    return $player;
+                }
+            });
+        }
+
+        foreach ($players as $player) {
+            if ($player !== null) {
+                $result[] = [
+                    "name" => $player->name,
+                    "surname" => $player->surname,
+                    "photo" => $player->photo,
+                    "$sortType" => $player->$sortType,
+                    "club_logo" => $player->club->logo
+                ];
+            }
+        }
+
+        return response()->json($result);
     }
 }

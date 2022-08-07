@@ -6,7 +6,7 @@ use App\Models\Player;
 
 class PlayerRecalculationService
 {
-    public function recalculate(Player $player, int|null $goals, int|null $assists, int|null $own_goals, float|null $current_rate)
+    public function recalculate(Player $player, int|null $goals, int|null $assists, int|null $own_goals, float|null $current_rate): void
     {
         $club = $player->club;
 
@@ -29,14 +29,12 @@ class PlayerRecalculationService
         }
 
         if ($current_rate !== null) {
-            $fullrate = $player->avg_rate * $player->games;
-            $fullrate = $fullrate - $player->current_rate + $current_rate;
-            $player->avg_rate = $fullrate / $player->games;
+            $fullRate = $player->avg_rate * $player->games;
+            $fullRate = $fullRate - $player->current_rate + $current_rate;
+            $player->avg_rate = $fullRate / $player->games;
         }
 
         $player->save();
         $club->save();
-
-        return true;
     }
 }

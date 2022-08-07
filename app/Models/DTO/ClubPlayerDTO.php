@@ -13,6 +13,7 @@ class ClubPlayerDTO implements interfaceDTO
     public static function fromModel(Model $club)
     {
         return [
+            "id" => $club->id,
             "name" => $club->name,
             "logo" => $club->logo
         ];
