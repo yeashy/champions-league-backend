@@ -86,7 +86,7 @@ class GameCrudController extends Controller
 
         $game = $gameService->countAllResults($request->input('home_players'), $request->input('away_players'), $request->input('videos'), $game);
         $game->save();
-        //TODO: maybe recalculate group and stage results
+        //TODO: recalculate group and stage results
         return response()->json([
             "message" => "OK"
         ]);

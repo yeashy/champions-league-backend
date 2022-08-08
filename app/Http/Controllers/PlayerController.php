@@ -130,4 +130,8 @@ class PlayerController extends Controller
 
         return response()->json($players);
     }
+
+    //TODO: team of the week controller
+    //TODO: stage controller
+    //TODO: make play-off logic (how???)
 }

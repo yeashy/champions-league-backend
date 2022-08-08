@@ -124,5 +124,5 @@ class PlayerCrudController extends Controller
         ]);
     }
 
-    //    TODO: make list with goals, assists, etc (by club done, by position)
+    //    TODO: make list with goals, assists, etc (by position)
 }

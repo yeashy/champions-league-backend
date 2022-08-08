@@ -28,7 +28,6 @@ class ClubCrudController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'string|required',
             'logo' => 'string|required',
-            'group_id' => 'int|required|exists:groups,id',
             'pot_id' => 'int|required|exists:pots,id'
         ]);
 
@@ -92,5 +91,5 @@ class ClubCrudController extends Controller
         ]);
     }
 
-//    TODO: make list with scored, conceded, etc (by group, by pot, by is_playing)
+//    TODO: make list with scored, conceded, etc (by is_playing)
 }
