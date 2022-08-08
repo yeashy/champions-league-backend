@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->id();
             $table->integer('game_id')->unsigned();
             $table->string('path');
+            $table->boolean('is_best')->default(false);
             $table->timestamps();
         });
     }

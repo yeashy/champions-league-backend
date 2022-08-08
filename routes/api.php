@@ -5,7 +5,10 @@ use App\Http\Controllers\ClubCrudController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerCrudController;
 use App\Http\Controllers\GameCrudController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\GroupController;
+use App\Http\Controllers\PotController;
+use App\Http\Controllers\VideoController;
+use App\Http\Controllers\FormationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +33,24 @@ Route::controller(ClubController::class)->group(function () {
     Route::get('/clubs/{id}/players', 'getPlayers');
     Route::patch('/clubs/swap/groups', 'swapGroups');
     Route::patch('/clubs/swap/pots', 'swapPots');
+});
+
+Route::controller(GroupController::class)->group(function () {
+    Route::get('/groups', 'getClubs');
+});
+
+Route::controller(PotController::class)->group(function () {
+    Route::get('/pots', 'getClubs');
+});
+
+Route::controller(VideoController::class)->group(function () {
+    Route::get('/videos', 'getVideos');
+    Route::get('/videos/best', 'getBestVideo');
+});
+
+Route::controller(FormationController::class)->group(function () {
+    Route::get('/formations', 'getFormations');
+    Route::get('/formations/{id}', 'getPositions');
 });
 
 Route::controller(PlayerCrudController::class)->group(function () {

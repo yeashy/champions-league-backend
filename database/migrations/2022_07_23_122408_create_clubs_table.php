@@ -26,7 +26,7 @@ return new class extends Migration
             $table->integer('goal_difference')->unsigned()->default(0);
             $table->integer('points')->unsigned()->default(0);
             $table->integer('group_place')->unsigned()->default(0);
-            $table->integer('group_id');
+            $table->integer('group_id')->unsigned()->nullable();
             $table->integer('stage_id')->nullable();
             $table->timestamps();
         });
