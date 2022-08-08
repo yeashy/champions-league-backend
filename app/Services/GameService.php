@@ -56,26 +56,36 @@ class GameService
 
     private function makeClubResults(Game $game): void
     {
-        ++$game->homeClub->games;
-        ++$game->awayClub->games;
-        $game->homeClub->goals_scored += $game->home_scored;
-        $game->homeClub->goals_conceded += $game->away_scored;
+        $homeClub = $game->homeClub;
+        $awayClub = $game->awayClub;
+        $winner = $game->winner;
+        $loser = $game->loser;
+
+        ++$homeClub->games;
+        $homeClub->goals_scored += $game->home_scored;
+        $homeClub->goals_conceded += $game->away_scored;
+        $homeClub->goal_difference = $homeClub->goals_scored - $homeClub->goals_conceded;
+
+        ++$awayClub->games;
+        $awayClub->goals_scored += $game->away_scored;
+        $awayClub->goals_conceded += $game->home_scored;
+        $awayClub->goal_difference = $awayClub->goals_scored - $awayClub->goals_conceded;
 
         if ($game->winner !== null) {
-            ++$game->winner->wins;
-            ++$game->loser->losses;
-            $game->winner->points += 3;
+            ++$winner->wins;
+            ++$loser->losses;
+            $winner->points += 3;
         } else {
-            ++$game->homeClub->draws;
-            ++$game->awayClub->draws;
-            ++$game->homeClub->points;
-            ++$game->awayClub->points;
+            ++$homeClub->draws;
+            ++$awayClub->draws;
+            ++$homeClub->points;
+            ++$awayClub->points;
         }
 
-        $game->homeClub->save();
-        $game->awayClub->save();
-        $game->winner->save();
-        $game->loser->save();
+        $homeClub->save();
+        $awayClub->save();
+        $winner->save();
+        $loser->save();
     }
 
     private function makePlayerResults(array $homePlayers, array $awayPlayers): void

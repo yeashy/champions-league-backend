@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $points
  * @property int $losses
  * @property int $draws
+ * @property int $goal_difference
  */
 class Club extends Model
 {

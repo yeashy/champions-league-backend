@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\DB;
  * @property int $away_scored
  * @property Club $winner
  * @property Club $loser
+ * @property Group $group
  */
 class Game extends Model
 {

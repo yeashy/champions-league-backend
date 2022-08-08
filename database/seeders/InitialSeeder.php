@@ -25,10 +25,8 @@ class InitialSeeder extends Seeder
     public function run(): void
     {
         $this->createPlayer();
-        $this->createClub();
         $this->createGroup();
         $this->createPot();
-        $this->createGame();
         $this->createFormation();
         $this->createStage();
         $this->createVideo();
@@ -53,23 +51,6 @@ class InitialSeeder extends Seeder
         $player->save();
     }
 
-    private function createClub()
-    {
-        $club = new Club();
-        $club->name = "Manchester City";
-        $club->logo = "path/to/logo/Manchester_City.webp";
-        $club->group_id = 1;
-        $club->pot_id = 1;
-        $club->save();
-
-        $club = new Club();
-        $club->name = "Real Madrid";
-        $club->logo = "path/to/logo/Real_Madrid.webp";
-        $club->group_id = 2;
-        $club->pot_id = 1;
-        $club->save();
-    }
-
     private function createGroup()
     {
         $group = new Group();
@@ -85,16 +66,6 @@ class InitialSeeder extends Seeder
     {
         $pot = new Pot();
         $pot->save();
-    }
-
-    private function createGame()
-    {
-        $game = new Game();
-        $game->home_club_id = 1;
-        $game->away_club_id = 2;
-        $game->stage_id = 1;
-        $game->group_id = 1;
-        $game->save();
     }
 
     private function createFormation()

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('losses')->unsigned()->default(0);
             $table->integer('goals_scored')->unsigned()->default(0);
             $table->integer('goals_conceded')->unsigned()->default(0);
-            $table->integer('goal_difference')->unsigned()->default(0);
+            $table->integer('goal_difference')->default(0);
             $table->integer('points')->unsigned()->default(0);
             $table->integer('group_place')->unsigned()->default(0);
             $table->integer('group_id')->unsigned()->nullable();

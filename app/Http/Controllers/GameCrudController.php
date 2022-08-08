@@ -6,6 +6,7 @@ use App\Models\DTO\ClubPlayerDTO;
 use App\Models\DTO\GameDTO;
 use App\Models\Game;
 use App\Services\GameService;
+use App\Services\ResultsRecalculationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
@@ -62,7 +63,7 @@ class GameCrudController extends Controller
         ]);
     }
 
-    public function update(int $id, Request $request, GameService $gameService): JsonResponse
+    public function update(int $id, Request $request, GameService $gameService, ResultsRecalculationService $resultsRecalculationService): JsonResponse
     {
         $game = Game::find($id);
 
@@ -86,6 +87,8 @@ class GameCrudController extends Controller
 
         $game = $gameService->countAllResults($request->input('home_players'), $request->input('away_players'), $request->input('videos'), $game);
         $game->save();
+
+        $resultsRecalculationService->recalculate($game);
         //TODO: recalculate group and stage results
         return response()->json([
             "message" => "OK"
